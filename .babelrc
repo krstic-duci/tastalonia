@@ -1,0 +1,6 @@
+{
+  // CSS plugin for react-spiners
+  "plugins": [
+    "emotion"
+  ]
+}
