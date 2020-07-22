@@ -1,16 +1,13 @@
 import React from 'react';
-import { Counter } from './features/counter/Counter';
+import Routes from './app/routes';
+import Footer from './components/Footer';
 
 function App() {
   return (
-    <div>
-      <header>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <Counter />
-      </header>
-    </div>
+    <>
+      <Routes />
+      <Footer />
+    </>
   );
 }
 

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/core": "^10.0.28",
     "@reduxjs/toolkit": "^1.4.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -10,7 +11,9 @@
     "axios": "^0.19.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-icons": "^3.10.0",
     "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-spinners": "^0.9.0"
   },
@@ -23,7 +26,7 @@
     "server": "json-server -w db.json",
     "start": "npm-run-all -p -l client server",
     "linter": "npm-run-all -s lint:prettier lint:eslint",
-    "lint:prettier": "npx prettier --write src/**/*.js src/css/*.css",
+    "lint:prettier": "npx prettier --write src/**/*.js src/assets/**/*.css",
     "lint:eslint": "npx eslint src/**/*.js"
   },
   "eslintConfig": {
@@ -51,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "babel-plugin-emotion": "^10.0.33",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint-config-prettier": "^6.11.0",
