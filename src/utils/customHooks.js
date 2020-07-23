@@ -25,6 +25,7 @@ export const useGet = (url, options, effectDependencies) => {
       }
     };
     fetchData();
+    // eslint-disable-next-line
   }, [effectDependencies]);
   return { response, error, isLoading };
 };

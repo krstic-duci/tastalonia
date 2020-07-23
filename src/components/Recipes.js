@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import React from 'react';
+import axios from 'axios';
 import { jsx, css } from '@emotion/core';
 import { CircleLoader } from 'react-spinners';
 import Container from '../containers/Container';
@@ -8,29 +9,51 @@ import { buttonPrimary, flexCenter } from '../utils/customStyles';
 import { RECIPES_URL } from '../constants';
 
 export default function Recipes() {
-  const [showMore, setShowMore] = React.useState(0);
-  // const [recipes, setRecipes] = React.useState([]);
-  const recipesObj = useGet(
-    `${RECIPES_URL}awdasdfagf?_startawd=0&_limit=10`,
-    {},
-  );
-  if (!recipesObj.response) {
-    return <CircleLoader size={100} color={'#42cc8c'} />;
-  }
-  // let recipes = recipesObj.response.data;
-  // let recipes = [];
+  const [startshowMore, setStartShowMore] = React.useState(0);
+  const [endShowMore, setEndShowMore] = React.useState(10);
+  const [response, setResponse] = React.useState(null);
+  const [recipes, setRecipes] = React.useState([]);
+  const [error, setError] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      console.log('called useEffect');
+      try {
+        const response = await axios.get(
+          `${RECIPES_URL}?_start=${startshowMore}&_end=${endShowMore}&_limit=10`,
+        );
+        setResponse(response);
+        setIsLoading(false);
+        // console.log('called try inside useEffect');
+        // console.log(response, 'RESPONSE');
+        // let recipeTmp = [...recipes, ...response.data];
+        // console.log(recipeTmp);
+        setRecipes(response.data);
+      } catch (error) {
+        setError(error);
+      }
+    };
+    fetchData();
+    return () => {
+      setRecipes([]);
+    };
+  }, [startshowMore, endShowMore]);
+
   const loadMoreRecipes = () => {
-    if (showMore == 66) {
+    if (startshowMore == 66) {
       return;
     }
-    setShowMore(showMore + 1);
+    // FIXME: start and end must be dynamic
+    // setStartShowMore(startshowMore + 11);
+    // setEndShowMore(endShowMore + 10);
   };
   return (
     <Container>
       <h1>Recipes</h1>
-      {/* {recipesObj.error ? (
+      {error ? (
         <p>Error fetching recipes, please try again later...</p>
-      ) : recipesObj.isLoading ? (
+      ) : isLoading ? (
         <div
           css={css`
             ${flexCenter}
@@ -46,8 +69,10 @@ export default function Recipes() {
             </div>
           ))}
         </section>
-      )} */}
-      <button css={buttonPrimary}>Show more</button>
+      )}
+      <button css={buttonPrimary} onClick={loadMoreRecipes}>
+        Show more
+      </button>
     </Container>
   );
 }
