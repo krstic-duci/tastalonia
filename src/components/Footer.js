@@ -1,5 +1,17 @@
-import React from 'react';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
 
 export default function Footer() {
-  return <h1>Footer</h1>;
+  return (
+    <footer
+      css={css`
+        text-align: center;
+      `}
+    >
+      <p>
+        Copyright by <em>@Creative fish</em>
+      </p>
+      <p>All rights reserved.</p>
+    </footer>
+  );
 }

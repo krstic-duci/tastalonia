@@ -5,6 +5,6 @@ Practice repo for react, redux (reduxjs/toolkit), react-router-dom
 2. Run `npm start` for app init
 
 
-Logo image taken from <a href="https://www.freepik.com/free-photos-vectors/background">Background vector created by rawpixel.com - www.freepik.com</a>
+Logo image taken from <a href='https://www.freepik.com/free-photos-vectors/food'>Food vector created by sentavio - www.freepik.com</a>
 
 Images taken from https://www.unsplash.com

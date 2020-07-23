@@ -26,7 +26,7 @@
     "server": "json-server -w db.json",
     "start": "npm-run-all -p -l client server",
     "linter": "npm-run-all -s lint:prettier lint:eslint",
-    "lint:prettier": "npx prettier --write src/**/*.js src/assets/**/*.css",
+    "lint:prettier": "npx prettier --write src/**/*.js",
     "lint:eslint": "npx eslint src/**/*.js"
   },
   "eslintConfig": {
