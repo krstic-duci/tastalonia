@@ -19,7 +19,7 @@ export default function Container({ children }) {
           maxWidth: '960px',
         },
         [mq()[0]]: {
-          maxWidth: '1140px'
+          maxWidth: '1140px',
         },
       }}
     >

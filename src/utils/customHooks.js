@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 /**
- * 
+ *
  * @description Custom hooks for fetching data with error and loading state
  * @param {String} url
  * @param {Object} options

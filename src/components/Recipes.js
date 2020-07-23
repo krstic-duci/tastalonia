@@ -47,9 +47,7 @@ export default function Recipes() {
           ))}
         </section>
       )} */}
-      <button css={buttonPrimary}>
-        Show more
-      </button>
+      <button css={buttonPrimary}>Show more</button>
     </Container>
   );
 }

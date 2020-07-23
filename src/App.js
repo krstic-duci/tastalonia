@@ -22,7 +22,8 @@ function App() {
           a {
             ${primaryColor};
           }
-          img, svg {
+          img,
+          svg {
             vertical-align: middle;
           }
         `}
