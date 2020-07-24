@@ -1,4 +1,5 @@
-import { css } from '@emotion/core';
+/**@jsx jsx */
+import { jsx, css } from '@emotion/core';
 
 export function mq() {
   const breakpoints = [1200, 992, 768, 576];
@@ -30,18 +31,50 @@ export const flexCenter = css`
   align-items: center;
 `;
 
+export const flexEvenly = css`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+`;
+
 export const buttonPrimary = css`
   padding: 10px 15px;
   border-radius: 2em;
   text-decoration: none;
   font-size: 18px;
+  text-align: center;
+`;
+
+export const enabledButton = css`
+  ${btnBgColor};
+  border: 1px solid transparent;
   color: #ffffff;
   cursor: pointer;
-  border: 1px solid transparent;
-  ${btnBgColor};
-  text-align: center;
-  transition: all 0.2s;
+  transition: border 0.2s;
   &:hover {
     border: 1px solid #483c32;
   }
 `;
+
+export const disabledButton = css`
+  cursor: not-allowed;
+  border: 0;
+  background-color: rgba(66, 204, 140, 0.5);
+  ${primaryColor};
+`;
+
+export const textWarning = css`
+  color: red;
+`;
+
+export const Button = (props) => (
+  <button
+    css={css`
+      ${buttonPrimary};
+      ${props.loadmore == 'true' ? disabledButton : enabledButton}
+    `}
+    {...props}
+  >
+    {props.children}
+  </button>
+);

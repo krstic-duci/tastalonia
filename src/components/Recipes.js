@@ -2,57 +2,69 @@
 import React from 'react';
 import axios from 'axios';
 import { jsx, css } from '@emotion/core';
+import { useRouteMatch, Link } from 'react-router-dom';
 import { CircleLoader } from 'react-spinners';
 import Container from '../containers/Container';
-import { useGet } from '../utils/customHooks';
-import { buttonPrimary, flexCenter } from '../utils/customStyles';
+import {
+  Button,
+  flexCenter,
+  textWarning,
+  flexEvenly,
+} from '../utils/customStyles';
 import { RECIPES_URL } from '../constants';
 
 export default function Recipes() {
-  const [startshowMore, setStartShowMore] = React.useState(0);
-  const [endShowMore, setEndShowMore] = React.useState(10);
-  const [response, setResponse] = React.useState(null);
-  const [recipes, setRecipes] = React.useState([]);
+  const match = useRouteMatch();
   const [error, setError] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const [startShowMore, setStartShowMore] = React.useState(0);
+  const [endShowMore, setEndShowMore] = React.useState(10);
+  const [totalRecipes, setTotalRecipes] = React.useState(0);
+  const [recipes, setRecipes] = React.useState([]);
+
   React.useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      console.log('called useEffect');
       try {
         const response = await axios.get(
-          `${RECIPES_URL}?_start=${startshowMore}&_end=${endShowMore}&_limit=10`,
+          `${RECIPES_URL}?_start=${startShowMore}&_end=${endShowMore}`,
         );
-        setResponse(response);
-        setIsLoading(false);
-        // console.log('called try inside useEffect');
-        // console.log(response, 'RESPONSE');
-        // let recipeTmp = [...recipes, ...response.data];
-        // console.log(recipeTmp);
+        // TODO: Missing dependency recipes
+        // setRecipes([...recipes, ...response.data]);
         setRecipes(response.data);
+        setTotalRecipes(response.headers['x-total-count']);
+        setIsLoading(false);
       } catch (error) {
-        setError(error);
+        setError(true);
       }
     };
     fetchData();
-    return () => {
-      setRecipes([]);
-    };
-  }, [startshowMore, endShowMore]);
+  }, [startShowMore, endShowMore]);
 
   const loadMoreRecipes = () => {
-    if (startshowMore == 66) {
+    if (endShowMore == totalRecipes) {
       return;
     }
-    // FIXME: start and end must be dynamic
-    // setStartShowMore(startshowMore + 11);
-    // setEndShowMore(endShowMore + 10);
+
+    startShowMore == 0
+      ? setStartShowMore(startShowMore + 11)
+      : setStartShowMore(startShowMore + 10);
+    totalRecipes - endShowMore < 10
+      ? setEndShowMore(totalRecipes)
+      : setEndShowMore(endShowMore + 10);
   };
   return (
     <Container>
       <h1>Recipes</h1>
       {error ? (
-        <p>Error fetching recipes, please try again later...</p>
+        <p
+          css={css`
+            ${textWarning}
+          `}
+        >
+          Error fetching recipes, please try again later...
+        </p>
       ) : isLoading ? (
         <div
           css={css`
@@ -62,17 +74,59 @@ export default function Recipes() {
           <CircleLoader size={100} color={'#42cc8c'} />
         </div>
       ) : (
-        <section>
+        <section
+          css={css`
+            ${flexEvenly}
+          `}
+        >
           {recipes.map((elem) => (
-            <div key={elem.id}>
-              <p>{elem.name}</p>
-            </div>
+            <Link
+              key={elem.id}
+              to={`${match.url}/${elem.id}`}
+              css={css`
+                margin-bottom: 50px;
+                text-decoration: none;
+                transition: transform 0.3s linear;
+                transform: translateY(0);
+                border-radius: 10px;
+                &:hover {
+                  transform: translateY(-10px);
+                  box-shadow: 0 0 20px rgba(0,0,0, 0.5)
+                }
+              `}
+            >
+              <figure
+                css={css`
+                  margin: 0;
+                `}
+              >
+                <img
+                  css={css`
+                    width: 300px;
+                    height: 300px;
+                  `}
+                  src={elem.image}
+                  alt={elem.name}
+                />
+                <figcaption
+                  css={css`
+                    margin-top: 8px;
+                    padding: 5px;
+                  `}
+                >
+                  {elem.name}
+                </figcaption>
+              </figure>
+            </Link>
           ))}
         </section>
       )}
-      <button css={buttonPrimary} onClick={loadMoreRecipes}>
+      <Button
+        onClick={loadMoreRecipes}
+        loadmore={(endShowMore == totalRecipes).toString()}
+      >
         Show more
-      </button>
+      </Button>
     </Container>
   );
 }
