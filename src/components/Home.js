@@ -33,13 +33,15 @@ export default function Home() {
         >
           Today's most voted recipe:
         </p>
-        <div css={{
+        <div
+          css={{
             width: '80%',
             margin: '0 auto',
             [mq()[2]]: {
-              width: '100%'
+              width: '100%',
             },
-        }}>
+          }}
+        >
           <img
             css={css`
               max-width: 100%;

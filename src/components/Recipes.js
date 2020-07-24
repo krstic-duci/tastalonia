@@ -91,7 +91,7 @@ export default function Recipes() {
                 border-radius: 10px;
                 &:hover {
                   transform: translateY(-10px);
-                  box-shadow: 0 0 20px rgba(0,0,0, 0.5)
+                  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
                 }
               `}
             >
