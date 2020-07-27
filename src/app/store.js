@@ -5,6 +5,6 @@ import favoriteReducer from '../features/favorite/favoriteSlice';
 export default configureStore({
   reducer: {
     counter: counterReducer,
-    favorite: favoriteReducer
+    favorite: favoriteReducer,
   },
 });

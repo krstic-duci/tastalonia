@@ -10,8 +10,8 @@ export const favoriteSlice = createSlice({
       state.favRecipe.push(action.payload);
     },
     removeFavRecipe: (state, action) => {
-      state.favRecipe.filter(elem => elem.id !== action.payload)
-    }
+      state.favRecipe.filter((elem) => elem.id !== action.payload);
+    },
   },
 });
 
