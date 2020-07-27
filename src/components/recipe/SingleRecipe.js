@@ -2,11 +2,12 @@
 import React from 'react';
 import { jsx, css } from '@emotion/core';
 import { useParams } from 'react-router-dom';
-import CircleLoader from 'react-spinners';
+import CircleLoader from 'react-spinners/CircleLoader';
 import axios from 'axios';
 import { RECIPES_URL } from '../../constants';
 import Container from '../../containers/Container';
-import { textWarning, flexCenter } from '../../utils/customStyles';
+import Favorite from '../../features/favorite/Favorite';
+import { textWarning, flexCenter, flexEvenly } from '../../utils/customStyles';
 
 export default function SingleRecipe() {
   let { id } = useParams();
@@ -15,26 +16,25 @@ export default function SingleRecipe() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [recipe, setRecipe] = React.useState([]);
 
-  // FIXME: react problem
-  // React.useEffect(() => {
-  //   const fetchData = async () => {
-  //     setIsLoading(true);
-  //     try {
-  //       const response = await axios.get(`${RECIPES_URL}/${id}`);
-  //       console.log(response);
-  //       // setRecipe(response.data);
-  //       setIsLoading(false);
-  //     } catch (error) {
-  //       setError(true);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [id]);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(`${RECIPES_URL}/${id}`);
+        setRecipe([response.data]);
+      } catch (error) {
+        setError(true);
+      }
+      setIsLoading(false);
+    };
+    fetchData();
+  }, [id]);
 
   return (
     <Container>
-      <h1>Single recipe</h1>
-      {error ? (
+      <h1>Recipe information</h1>
+
+      {error && (
         <p
           css={css`
             ${textWarning}
@@ -42,7 +42,8 @@ export default function SingleRecipe() {
         >
           Error fetching recipes, please try again later...
         </p>
-      ) : null}
+      )}
+
       {isLoading ? (
         <div
           css={css`
@@ -53,12 +54,40 @@ export default function SingleRecipe() {
         </div>
       ) : (
         <section>
-          {/* {recipe.map((elem, i) => (
-            <div key={i}>
-              <p>{elem.name}</p>
+          {recipe.map((elem) => (
+            <div key={elem.id}>
+              <div
+                css={css`
+                  ${flexEvenly} align-items: center;
+                `}
+              >
+                <div>
+                  <img src={elem.image} alt={elem.name} />
+                  <p>{elem.name}</p>
+                </div>
+                <div>
+                  <p>Ingredients:</p>
+                  <ul>
+                    {elem.ingredients.map((elemIng, i) => (
+                      <li
+                        key={i}
+                        css={css`
+                          margin: 10px 0;
+                        `}
+                      >
+                        {elemIng}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <p>{elem.text}</p>
+              {/* deliberately using redux toolkit for fav recipes */}
+              <Favorite elem={elem} />
             </div>
-          ))} */}
-          Duleaka
+          ))}
+          {/* TODO: Why 4 console.log() statement */}
+          {/* {console.log(recipe)} */}
         </section>
       )}
     </Container>

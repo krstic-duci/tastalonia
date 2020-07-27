@@ -38,7 +38,7 @@ export const flexEvenly = css`
 `;
 
 export const buttonPrimary = css`
-  padding: 10px 15px;
+  padding: 10px 25px;
   border-radius: 2em;
   text-decoration: none;
   font-size: 18px;
@@ -65,6 +65,10 @@ export const disabledButton = css`
 
 export const textWarning = css`
   color: red;
+`;
+
+export const iconPink = css`
+  color: #ffc0cb;
 `;
 
 export const Button = (props) => (

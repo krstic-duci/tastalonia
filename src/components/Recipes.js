@@ -69,6 +69,7 @@ export default function Recipes() {
         <div
           css={css`
             ${flexCenter}
+            margin: 100px 0;
           `}
         >
           <CircleLoader size={100} color={'#42cc8c'} />
@@ -121,12 +122,18 @@ export default function Recipes() {
           ))}
         </section>
       )}
-      <Button
-        onClick={loadMoreRecipes}
-        loadmore={(endShowMore == totalRecipes).toString()}
+      <div
+        css={css`
+          text-align: center;
+        `}
       >
-        Show more
-      </Button>
+        <Button
+          onClick={loadMoreRecipes}
+          loadmore={(endShowMore == totalRecipes).toString()}
+        >
+          Show more
+        </Button>
+      </div>
     </Container>
   );
 }
