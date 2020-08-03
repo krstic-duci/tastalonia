@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import { css, jsx } from '@emotion/core';
 import { FaHeart, FaRegSmileBeam, FaSearch } from 'react-icons/fa';
+import { MdClose } from 'react-icons/md';
 import CircleLoader from 'react-spinners/CircleLoader';
 import Container from '../containers/Container';
 import homeImage from '../assets/img/monika-grabkowska.jpg';
@@ -41,12 +42,20 @@ export default function Home() {
   }, [query]);
 
   const setQueryInput = (e) => {
-    setQuery(e.target.value);
-    if (e.target.value.length <= 2) {
+    const inputVal = e.target.value;
+
+    setQuery(inputVal);
+    if (inputVal.length <= 2) {
       setQueryOnFocus(true);
     } else {
       setQueryOnFocus(false);
     }
+  };
+
+  const clearInputSearch = () => {
+    setRecipeSearch([]);
+    setQuery('');
+    setQueryOnFocus(false);
   };
 
   return (
@@ -156,6 +165,28 @@ export default function Home() {
             `}
           />
         </label>
+
+        {recipeSearch.length > 0 ? (
+          <span
+            onClick={clearInputSearch}
+            role='button'
+            tabIndex='0'
+            onKeyDown={clearInputSearch}
+            css={css`
+              margin-left: 10px;
+              border-radius: 5px;
+              color: #fff;
+              background-color: rgba(0, 0, 0, 0.5);
+              padding: 5px;
+              cursor: pointer;
+            `}
+          >
+            Clear search
+            <i>
+              <MdClose />
+            </i>
+          </span>
+        ) : null}
       </form>
 
       <section>

@@ -62,7 +62,14 @@ export default function SingleRecipe() {
                 `}
               >
                 <div>
-                  <img src={elem.image} alt={elem.name} />
+                  <img
+                    src={elem.image}
+                    alt={elem.name}
+                    css={css`
+                      width: 300px;
+                      height: 300px;
+                    `}
+                  />
                   <p>{elem.name}</p>
                 </div>
                 <div>

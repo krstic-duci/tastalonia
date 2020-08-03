@@ -18,6 +18,7 @@ export default function Recipes() {
   const [error, setError] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
 
+  const [posY, setPosY] = React.useState(0);
   const [startShowMore, setStartShowMore] = React.useState(0);
   const [endShowMore, setEndShowMore] = React.useState(10);
   const [totalRecipes, setTotalRecipes] = React.useState(0);
@@ -31,21 +32,25 @@ export default function Recipes() {
           `${RECIPES_URL}?_start=${startShowMore}&_end=${endShowMore}`,
         );
         // TODO: Missing dependency recipes
-        // setRecipes([...recipes, ...response.data]);
-        setRecipes(response.data);
+        setRecipes([...recipes, ...response.data]);
         setTotalRecipes(response.headers['x-total-count']);
         setIsLoading(false);
+
+        window.scrollTo(0, posY);
       } catch (error) {
         setError(true);
       }
     };
     fetchData();
-  }, [startShowMore, endShowMore]);
+    // eslint-disable-next-line
+  }, [startShowMore, endShowMore, posY]);
 
   const loadMoreRecipes = () => {
     if (endShowMore == totalRecipes) {
       return;
     }
+
+    setPosY(window.scrollY);
 
     startShowMore == 0
       ? setStartShowMore(startShowMore + 11)
